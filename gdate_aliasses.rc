@@ -1,0 +1,9 @@
+alias tomorrow='gdate "+%Y-%m-%d" -d "tomorrow"'
+alias next_sunday='gdate "+%Y-%m-%d" -d "next sunday"'
+alias next_tuesday='gdate "+%Y-%m-%d" -d "next tuesday"'
+alias next_thursday='gdate "+%Y-%m-%d" -d "next thursday"'
+
+alias yesterday='gdate "+%Y-%m-%d" -d "yesterday"'
+alias last_sunday='gdate "+%Y-%m-%d" -d "last sunday"'
+alias last_tuesday='gdate "+%Y-%m-%d" -d "last tuesday"'
+alias last_thursday='gdate "+%Y-%m-%d" -d "last thursday"'

@@ -151,6 +151,7 @@ def main():
 
         yaml_data = {
             "Trainingsgroep": {
+                "Datum": doel_datum,
                 "Trainingsgroep 1": {
                     "Aantal": len(tg1_lijst),
                     "Spelers": tg1_lijst
@@ -200,6 +201,7 @@ def main():
 
         yaml_data = {
             "Selecties": {
+                "Datum": doel_datum,
                 "Vr1": {
                     "Aantal": len(vr1_lijst),
                     "Spelers": vr1_lijst
@@ -220,7 +222,7 @@ def main():
                 "Spelers": speelsters
             }
 
-    # 5. Output genereren met yamllint ondersteuning (explicit_start en Custom Dumper)
+    # 5. Output genereren met yamllint ondersteuning
     yaml_str = yaml.dump(
         yaml_data, 
         Dumper=YamlLintDumper,

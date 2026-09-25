@@ -5,6 +5,18 @@ import os
 import sys
 import yaml
 
+# Mapping van de status-omschrijvingen naar WhatsApp iconen (Optie 1: Duidelijk & Functioneel)
+STATUS_ICONS = {
+    "Afwezig (algemeen)": "❌",
+    "Vakantie": "🌴",
+    "Ziek": "🤒",
+    "Zwanger": "🤰",
+    "Werk / School": "💼",
+    "Geblesseerd": "🏥",
+    "Twijfel": "🤔",
+    "Onbekend": "❓",
+}
+
 
 def verwerk_spelers_lijst(details):
     """Helper om een lijst van spelers op te halen uit een lijst of dictionary structuur."""
@@ -17,22 +29,30 @@ def verwerk_spelers_lijst(details):
 
 def formatteer_selecties(selecties):
     """Genereert WhatsApp-bericht voor wedstrijdselecties."""
-    whatsapp_output = "⚽ *Indeling Selecties* ⚽\n\n"
+    datum = selecties.get("Datum")
+    whatsapp_output = "⚽ *Indeling Selecties* ⚽\n"
+    if datum:
+        whatsapp_output += f"🗓️ {datum}\n"
+    whatsapp_output += "\n"
 
     for groep, details in selecties.items():
+        if groep.lower() == "datum":
+            continue
+
         if groep.lower() == "overige":
             whatsapp_output += "------------------------------\n"
             if isinstance(details, dict):
                 totaal_overige = sum(
                     len(verwerk_spelers_lijst(v)) for v in details.values()
                 )
-                whatsapp_output += f"📌 *{groep.upper()}* ({totaal_overige}):\n\n"
+                whatsapp_output += f"📋 *{groep.upper()}* ({totaal_overige}):\n\n"
                 for code, subdetails in details.items():
                     spelers = verwerk_spelers_lijst(subdetails)
-                    whatsapp_output += f"❓ *{code}* ({len(spelers)}):\n"
+                    icoon = STATUS_ICONS.get(code, "❓")
+                    whatsapp_output += f"{icoon} *{code}* ({len(spelers)}):\n"
                     whatsapp_output += ", ".join(spelers) + "\n\n"
             elif isinstance(details, list):
-                whatsapp_output += f"📌 *{groep.upper()}* ({len(details)}):\n"
+                whatsapp_output += f"📋 *{groep.upper()}* ({len(details)}):\n"
                 whatsapp_output += ", ".join(details) + "\n\n"
         else:
             spelers = verwerk_spelers_lijst(details)
@@ -44,16 +64,24 @@ def formatteer_selecties(selecties):
 
 def formatteer_trainingsgroepen(trainingsgroepen):
     """Genereert WhatsApp-bericht voor trainingsgroepen."""
-    whatsapp_output = "⚽ *Indeling Trainingsgroepen* ⚽\n\n"
+    datum = trainingsgroepen.get("Datum")
+    whatsapp_output = "⚽ *Indeling Trainingsgroepen* ⚽\n"
+    if datum:
+        whatsapp_output += f"🗓️ {datum}\n"
+    whatsapp_output += "\n"
 
     for groep, details in trainingsgroepen.items():
+        if groep.lower() == "datum":
+            continue
+
         if groep.lower() == "overige":
             whatsapp_output += "------------------------------\n"
-            whatsapp_output += f"📌 *{groep.upper()}*\n\n"
+            whatsapp_output += f"📋 *{groep.upper()}*\n\n"
             if isinstance(details, dict):
                 for subcategorie, subdetails in details.items():
                     spelers = verwerk_spelers_lijst(subdetails)
-                    whatsapp_output += f"❓ *{subcategorie}* ({len(spelers)}):\n"
+                    icoon = STATUS_ICONS.get(subcategorie, "❓")
+                    whatsapp_output += f"{icoon} *{subcategorie}* ({len(spelers)}):\n"
                     whatsapp_output += ", ".join(spelers) + "\n\n"
         else:
             spelers = verwerk_spelers_lijst(details)
