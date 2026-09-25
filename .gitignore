@@ -21,6 +21,9 @@ env/
 # Images 
 *.png
 
+# Old stuff
+old/
+
 # Python Cache & Overige
 __pycache__/
 *.py[cod]
