@@ -56,7 +56,7 @@ def formatteer_selecties(selecties):
                 whatsapp_output += ", ".join(details) + "\n\n"
         else:
             spelers = verwerk_spelers_lijst(details)
-            whatsapp_output += f"🟢 *{groep}* ({len(spelers)}):\n"
+            whatsapp_output += f"🔵⚪ *{groep}* ({len(spelers)}):\n"
             whatsapp_output += ", ".join(spelers) + "\n\n"
 
     return whatsapp_output.strip()
@@ -85,7 +85,7 @@ def formatteer_trainingsgroepen(trainingsgroepen):
                     whatsapp_output += ", ".join(spelers) + "\n\n"
         else:
             spelers = verwerk_spelers_lijst(details)
-            whatsapp_output += f"🟢 *{groep}* ({len(spelers)}):\n"
+            whatsapp_output += f"🔵⚪ *{groep}* ({len(spelers)}):\n"
             whatsapp_output += ", ".join(spelers) + "\n\n"
 
     return whatsapp_output.strip()
